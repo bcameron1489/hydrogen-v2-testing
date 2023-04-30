@@ -4,6 +4,7 @@ import {MediaFile} from '@shopify/hydrogen-react';
 import { useEffect } from 'react';
 import ProductOptions from '~/components/ProductOptions';
 import {Link, useLocation,useSearchParams} from '@remix-run/react';
+import tailwind from './styles/tailwind-build.css';
 
 export default function ProductOptions({options}) {
   const {pathname, search} = useLocation();
@@ -83,21 +84,21 @@ export async function loader({params, context, request}) {
     return json({
       product,
     });
-  }
-  
 
-  function PrintJson({data}) {
-    return (
-      <details className="outline outline-2 outline-blue-300 p-4 my-2">
-        <summary>Product JSON</summary>
-        <pre>{JSON.stringify(data, null, 2)}</pre>
-      </details>
-    );
+    // optionally set a default variant so you always have an "orderable" product selected
+    const selectedVariant =
+    product.selectedVariant ?? product?.variants?.nodes[0];
+
+    return json({
+    product,
+    selectedVariant,
+    });
+
   }
   
 
   export default function ProductHandle() {
-    const {product, handle} = useLoaderData();
+    const {product, selectedVariant} = useLoaderData();
     let klproduct = product
     useEffect(() => {
         var _learnq = window._learnq || [];
@@ -111,13 +112,12 @@ export async function loader({params, context, request}) {
             ImageURL: product.media.nodes[0].image.url,
             URL: product.url,
             Brand: product.vendor,
-            // Price: product.selectedVariant.priceV2.amount,
-            // CompareAtPrice: product.selectedVariant.compareAtPriceV2.amount
+            Price: product.selectedVariant.price.amount
     };
   _learnq.push(['track', 'Viewed Product', prod]);
             });
 
-            console.log(product.options)
+            console.log('this is the variant:  ' + product.selectedVariant)
     return (
       <section className="w-full gap-4 md:gap-8 grid px-6 md:px-8 lg:px-12">
         <div className="grid items-start gap-6 lg:gap-20 md:grid-cols-2 lg:grid-cols-3">
@@ -127,9 +127,11 @@ export async function loader({params, context, request}) {
 
             </div>
           </div>
-          <ProductOptions options={product.options} />
-{/* Delete this after verifying */}
-<p>Selected Variant: {product.selectedVariant?.id}</p>
+          <ProductOptions
+  options={product.options}
+  selectedVariant={selectedVariant}
+/>
+
           <div className="md:sticky md:mx-auto max-w-xl md:max-w-[24rem] grid gap-8 p-0 md:p-6 md:px-0 top-[6rem] lg:top-[8rem] xl:top-[10rem]">
             <div className="grid gap-2">
               <h1 className="text-4xl font-bold leading-10 whitespace-normal">
@@ -139,7 +141,6 @@ export async function loader({params, context, request}) {
                 {product.vendor}
               </span>
             </div>
-            <ProductOptions options={product.options} />
                 <div
                     className="prose border-t border-gray-200 pt-6 text-black text-md"
                     dangerouslySetInnerHTML={{ __html: product.descriptionHtml }}
