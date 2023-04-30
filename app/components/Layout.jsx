@@ -3,12 +3,31 @@ import {Suspense} from 'react';
 import {Await} from '@remix-run/react';
 import {useMatches} from '@remix-run/react';
 import {CartLineItems, CartActions, CartSummary} from '~/components/Cart';
+import {useFetchers} from '@remix-run/react';
+import {useEffect} from 'react';
+
 
 
 export function Layout({children, title}) {
   const {isOpen, openDrawer, closeDrawer} = useDrawer();
+  const fetchers = useFetchers();
   const [root] = useMatches();
   const cart = root.data?.cart;
+
+  // Grab all the fetchers that are adding to cart
+  const addToCartFetchers = [];
+  for (const fetcher of fetchers) {
+    if (fetcher?.formData?.get('cartAction') === 'ADD_TO_CART') {
+      addToCartFetchers.push(fetcher);
+    }
+  }
+
+  // When the fetchers array changes, open the drawer if there is an add to cart action
+  useEffect(() => {
+    if (isOpen || addToCartFetchers.length === 0) return;
+    openDrawer();
+  }, [addToCartFetchers]);
+
   return (
     <div className="flex flex-col min-h-screen antialiased bg-neutral-50">
       <header
