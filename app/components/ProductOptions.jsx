@@ -1,3 +1,5 @@
+import tailwind from './styles/tailwind-build.css';
+
 import {
     Link,
     useLocation,
@@ -9,7 +11,7 @@ import {
     const {pathname, search} = useLocation();
     const [currentSearchParams] = useSearchParams();
     const navigation = useNavigation();
-    console.log('variant selected ' + selectedVariant)
+    
   
     const paramsWithDefaults = (() => {
       const defaultParams = new URLSearchParams(currentSearchParams);
