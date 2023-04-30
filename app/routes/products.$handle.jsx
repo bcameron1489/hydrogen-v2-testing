@@ -1,16 +1,18 @@
 
 import {useLoaderData} from '@remix-run/react';
 import {json} from '@shopify/remix-oxygen';
-import {MediaFile} from '@shopify/hydrogen-react';
+import {MediaFile, Money, ShopPayButton} from '@shopify/hydrogen-react';
 import ProductOptions from '~/components/ProductOptions';
 import { useEffect } from "react";
-
+import {useMatches, useFetcher} from '@remix-run/react';
 
 
 export async function loader({params, context, request}) {
   const {handle} = params;
   const searchParams = new URL(request.url).searchParams;
   const selectedOptions = [];
+  const storeDomain = context.storefront.getShopifyDomain();
+
 
   // set selected options from the query string
   searchParams.forEach((value, name) => {
@@ -35,13 +37,17 @@ const selectedVariant =
 return json({
   product,
   selectedVariant,
+  storeDomain,
 });
 
 }
 
 
 export default function ProductHandle() {
-  const {product, selectedVariant} = useLoaderData();
+  const {product, selectedVariant, storeDomain} = useLoaderData();
+  const orderable = selectedVariant?.availableForSale || false;
+
+
 
   let klproduct = product
     useEffect(() => {
@@ -84,7 +90,23 @@ export default function ProductHandle() {
   options={product.options}
   selectedVariant={selectedVariant}
 />
+<Money
+  withoutTrailingZeros
+  data={selectedVariant.price}
+  className="text-xl font-semibold mb-2"
+/>
 
+ 
+    
+<div className="space-y-2">
+  <ShopPayButton
+    storeDomain={storeDomain}
+    variantIds={[selectedVariant?.id]}
+    width={'400px'}
+  />
+  <ProductForm variantId={selectedVariant?.id} />
+</div>
+</div>
 <div
   className="prose border-t border-gray-200 pt-6 text-black text-md"
   dangerouslySetInnerHTML={{ __html: product.descriptionHtml }}
@@ -95,7 +117,6 @@ export default function ProductHandle() {
             dangerouslySetInnerHTML={{ __html: product.descriptionHtml }}
           ></div>
         </div>
-      </div>
     </section>
   );
 }
@@ -159,8 +180,28 @@ function ProductGallery({media}) {
   );
 }
 
+function ProductForm({variantId}) {
+  const [root] = useMatches();
+  const selectedLocale = root?.data?.selectedLocale;
+  const fetcher = useFetcher();
 
+  const lines = [{merchandiseId: variantId, quantity: 1}];
 
+  return (
+    <fetcher.Form action="/cart" method="post">
+      <input type="hidden" name="cartAction" value={'ADD_TO_CART'} />
+      <input
+        type="hidden"
+        name="countryCode"
+        value={selectedLocale?.country ?? 'US'}
+      />
+      <input type="hidden" name="lines" value={JSON.stringify(lines)} />
+      <button className="bg-black text-white px-6 py-3 w-full rounded-md text-center font-medium max-w-[400px]">
+        Add to Bag
+      </button>
+    </fetcher.Form>
+  );
+}
 
 const PRODUCT_QUERY = `#graphql
   query product($handle: String!, $selectedOptions: [SelectedOptionInput!]!) {
