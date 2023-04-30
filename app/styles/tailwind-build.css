@@ -492,10 +492,6 @@ video {
 .z-40 {
   z-index: 40;
 }
-.my-2 {
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
-}
 .mb-4 {
   margin-bottom: 1rem;
 }
@@ -652,9 +648,6 @@ video {
 .p-6 {
   padding: 1.5rem;
 }
-.p-4 {
-  padding: 1rem;
-}
 .px-6 {
   padding-left: 1.5rem;
   padding-right: 1.5rem;
@@ -681,11 +674,11 @@ video {
 .font-bold {
   font-weight: 700;
 }
-.font-medium {
-  font-weight: 500;
-}
 .font-extrabold {
   font-weight: 800;
+}
+.font-medium {
+  font-weight: 500;
 }
 .leading-10 {
   line-height: 2.5rem;
@@ -714,15 +707,6 @@ video {
   --tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
-.outline {
-  outline-style: solid;
-}
-.outline-2 {
-  outline-width: 2px;
-}
-.outline-blue-300 {
-  outline-color: #93c5fd;
-}
 .backdrop-blur-lg {
   --tw-backdrop-blur: blur(16px);
   -webkit-backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
@@ -743,18 +727,15 @@ video {
 .duration-200 {
   transition-duration: 200ms;
 }
-
 .last\:mb-0:last-child {
   margin-bottom: 0px;
 }
-
 @media (min-width: 640px) {
 
   .sm\:grid-cols-3 {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
-
 @media (min-width: 768px) {
 
   .md\:sticky {
@@ -828,7 +809,6 @@ video {
     padding-right: 2rem;
   }
 }
-
 @media (min-width: 1024px) {
 
   .lg\:top-\[8rem\] {
@@ -860,7 +840,6 @@ video {
     padding-right: 3rem;
   }
 }
-
 @media (min-width: 1280px) {
 
   .xl\:top-\[10rem\] {
