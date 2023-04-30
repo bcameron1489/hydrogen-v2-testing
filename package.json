@@ -4,8 +4,10 @@
   "sideEffects": false,
   "version": "0.0.0",
   "scripts": {
-    "build": "shopify hydrogen build",
-    "dev": "shopify hydrogen dev",
+    "build": "npm run build:css && shopify hydrogen build --entry ./server",
+    "build:css": "postcss app/styles/tailwind.css -o app/styles/tailwind-build.css --env production",
+    "dev": "npm run build:css && concurrently -g -r npm:dev:css \"shopify hydrogen dev\"",
+    "dev:css": "postcss app/styles/tailwind.css -o app/styles/tailwind-build.css -w",    
     "preview": "npm run build && shopify hydrogen preview",
     "lint": "eslint --no-error-on-unmatched-pattern --ext .js,.ts,.jsx,.tsx .",
     "g": "shopify hydrogen generate"
@@ -26,9 +28,14 @@
   "devDependencies": {
     "@remix-run/dev": "1.15.0",
     "@shopify/prettier-config": "^1.1.2",
+    "autoprefixer": "^10.4.14",
+    "concurrently": "^8.0.1",
     "eslint": "^8.20.0",
     "eslint-plugin-hydrogen": "0.12.2",
-    "prettier": "^2.8.4"
+    "postcss": "^8.4.23",
+    "postcss-cli": "^10.1.0",
+    "prettier": "^2.8.4",
+    "tailwindcss": "^3.3.2"
   },
   "engines": {
     "node": ">=16.13"
