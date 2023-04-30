@@ -7,13 +7,14 @@
     "build": "npm run build:css && shopify hydrogen build --entry ./server",
     "build:css": "postcss app/styles/tailwind.css -o app/styles/tailwind-build.css --env production",
     "dev": "npm run build:css && concurrently -g -r npm:dev:css \"shopify hydrogen dev\"",
-    "dev:css": "postcss app/styles/tailwind.css -o app/styles/tailwind-build.css -w",       
+    "dev:css": "postcss app/styles/tailwind.css -o app/styles/tailwind-build.css -w",
     "preview": "npm run build && shopify hydrogen preview",
     "lint": "eslint --no-error-on-unmatched-pattern --ext .js,.ts,.jsx,.tsx .",
     "g": "shopify hydrogen generate"
   },
   "prettier": "@shopify/prettier-config",
   "dependencies": {
+    "@headlessui/react": "^1.7.14",
     "@remix-run/react": "1.15.0",
     "@shopify/cli": "3.45.0",
     "@shopify/cli-hydrogen": "^4.1.1",
