@@ -7,9 +7,6 @@ import { useEffect } from "react";
 import {useMatches, useFetcher} from '@remix-run/react';
 
 
-
-
-
 export async function loader({params, context, request}) {
   const {handle} = params;
   const searchParams = new URL(request.url).searchParams;
@@ -109,12 +106,7 @@ export default function ProductHandle() {
   />
   <ProductForm variantId={selectedVariant?.id} />
 </div>
-
-
-  </div>
-
-
-
+</div>
 <div
   className="prose border-t border-gray-200 pt-6 text-black text-md"
   dangerouslySetInnerHTML={{ __html: product.descriptionHtml }}
@@ -210,10 +202,6 @@ function ProductForm({variantId}) {
     </fetcher.Form>
   );
 }
-
-
-
-
 
 const PRODUCT_QUERY = `#graphql
   query product($handle: String!, $selectedOptions: [SelectedOptionInput!]!) {
