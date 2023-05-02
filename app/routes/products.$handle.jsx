@@ -64,10 +64,9 @@ export default function ProductHandle() {
             Brand: klproduct.vendor,
             Price: klproduct.variants.nodes[0].price.amount
     };
-  _learnq.push(['track', 'Viewed Product', prod]);
-            });
-
-            console.log(klproduct.variants.nodes[0].price.amount)
+    _learnq.push(['track', 'Viewed Product', prod]);
+  });
+            
 
   return (
     <section className="w-full gap-4 md:gap-8 grid px-6 md:px-8 lg:px-12">
