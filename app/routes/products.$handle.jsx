@@ -51,6 +51,7 @@ export default function ProductHandle() {
 
   let klproduct = product
     useEffect(() => {
+      const vp = async () => {
         var _learnq = window._learnq || [];
         var prod = {
             Name: klproduct.title,
@@ -63,9 +64,12 @@ export default function ProductHandle() {
             URL: klproduct.url,
             Brand: klproduct.vendor,
             Price: klproduct.variants.nodes[0].price.amount
-    };
-    _learnq.push(['track', 'Viewed Product', prod]);
-  });
+        };
+        _learnq.push(['track', 'Viewed Product', prod]);
+      }
+      vp()
+      .catch(console.error);
+  },[]);
             
 
   return (
