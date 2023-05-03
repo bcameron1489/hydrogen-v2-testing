@@ -28,19 +28,19 @@ For a simulated dev instance, I can provide credentials for a shared environment
 
 ## Steps to install
 
-Git clone
-nvm use v16.x.x
-npm install npm@7.24.2 or npm install -g npm@7.24.2 (requires v7)
-npm install
-touch .env (creates an env where we'll insert our environment variables)
-Insert personal environment variables into the .env file or use shared creds
-  - Example .env structure:
+- Git clone
+- nvm use v16.x.x
+- npm install npm@7.24.2 or npm install -g npm@7.24.2 (requires v7)
+- npm install
+- touch .env (creates an env where we'll insert our environment variables)
+- Insert personal environment variables into the .env file or use shared creds
+- Example .env structure:
   
-  SESSION_SECRET="foobar"
-  PUBLIC_STOREFRONT_API_TOKEN="xxxxxxxxxxx"
-  PUBLIC_STOREFRONT_API_VERSION="2023-04"
-  PUBLIC_STORE_DOMAIN="example-preview.myshopify.com"
+  - SESSION_SECRET="foobar"
+  - PUBLIC_STOREFRONT_API_TOKEN="xxxxxxxxxxx"
+  - PUBLIC_STOREFRONT_API_VERSION="2023-04"
+  - PUBLIC_STORE_DOMAIN="example-preview.myshopify.com"
   
-yarn dev (to boot up instance on localhost)
+yarn dev (local build)
 
 
