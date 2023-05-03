@@ -5,6 +5,7 @@ import {MediaFile, Money, ShopPayButton} from '@shopify/hydrogen-react';
 import ProductOptions from '~/components/ProductOptions';
 import { useEffect } from "react";
 import {useMatches, useFetcher} from '@remix-run/react';
+import trackViewedProduct from '~/components/Onsite'
 
 
 export async function loader({params, context, request}) {
@@ -46,26 +47,21 @@ return json({
 export default function ProductHandle() {
   const {product, selectedVariant, storeDomain} = useLoaderData();
   const orderable = selectedVariant?.availableForSale || false;
+  
+  // const vp = function () {
+  //   let klproduct = product;
+  //   if (klproduct) {
+  //     console.log('klproduct: ', klproduct)
+  //   }
+  //   trackViewedProduct(klproduct)
+  // }
 
 
 
-  let klproduct = product
-    useEffect(() => {
-        var _learnq = window._learnq || [];
-        var prod = {
-            Name: klproduct.title,
-            ProductID: klproduct.id.substring(klproduct.id.lastIndexOf('/') + 1),
-            Categories:
-                klproduct.collections == undefined
-                ? null
-                : klproduct.collections.edges.map((a) => a.node.title),
-            ImageURL: klproduct.media.nodes[0].image.url,
-            URL: klproduct.url,
-            Brand: klproduct.vendor,
-            Price: klproduct.variants.nodes[0].price.amount
-    };
-    _learnq.push(['track', 'Viewed Product', prod]);
-  });
+  useEffect(() => {
+    let klproduct = product;
+    trackViewedProduct(klproduct);
+  },[]);
             
 
   return (
