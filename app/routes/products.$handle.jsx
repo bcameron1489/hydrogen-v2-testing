@@ -48,16 +48,6 @@ export default function ProductHandle() {
   const {product, selectedVariant, storeDomain} = useLoaderData();
   const orderable = selectedVariant?.availableForSale || false;
   
-  // const vp = function () {
-  //   let klproduct = product;
-  //   if (klproduct) {
-  //     console.log('klproduct: ', klproduct)
-  //   }
-  //   trackViewedProduct(klproduct)
-  // }
-
-
-
   useEffect(() => {
     let klproduct = product;
     trackViewedProduct(klproduct);
