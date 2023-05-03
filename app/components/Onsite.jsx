@@ -1,6 +1,6 @@
 
 
-export default function trackViewedProduct(klproduct) {
+export function trackViewedProduct(klproduct) {
 
         var _learnq = window._learnq || [];
         var prod = {
@@ -19,3 +19,4 @@ export default function trackViewedProduct(klproduct) {
 
     console.log('component is rendering')
   }
+
