@@ -48,14 +48,6 @@ return json({
 export default function ProductHandle() {
   const {product, selectedVariant, storeDomain} = useLoaderData();
   const orderable = selectedVariant?.availableForSale || false;
-
-  const trackAddedToCart = function () {
-    var _learnq = _learnq || [];
-    let klproduct = product
-    console.log('atc click handler trigger')
-    _learnq.push(['track', 'Added to Cart Hydrogen Test', klproduct]);
-    console.log('past push event')
-  }
   
   useEffect(() => {
     let klproduct = product;
@@ -179,12 +171,18 @@ function ProductForm({variantId}) {
   const selectedLocale = root?.data?.selectedLocale;
   const fetcher = useFetcher();
   const {product, selectedVariant, storeDomain} = useLoaderData();
+  
 
+  let klcart = product;
   const handleAtc = function () {
-    console.log('atc loaded')
     var _learnq = window._learnq || [];
-    let klcart = product;
-    _learnq.push(['track', 'hydrogen ATC', klcart])
+    let item = {
+      Name: klcart.title,
+      ImageURL: klcart.media.nodes[0].image.url,
+      Handle: klcart.handle,
+      Price: klcart.variants.nodes[0].price.amount
+    }
+    _learnq.push(['track', 'hydrogen ATC', item])
   }
 
   
