@@ -1,19 +1,29 @@
-export function trackViewedProduct(klproduct) {
-
+export function trackViewedProduct(product) {
         var _learnq = window._learnq || [];
-        var prod = {
-            Name: klproduct.title,
-            ProductID: klproduct.id.substring(klproduct.id.lastIndexOf('/') + 1),
+        var item = {
+            Name: product.title,
+            ProductID: product.id.substring(product.id.lastIndexOf('/') + 1),
             Categories:
-                klproduct.collections == undefined
+                product.collections == undefined
                 ? null
-                : klproduct.collections.edges.map((a) => a.node.title),
-            ImageURL: klproduct.media.nodes[0].image.url,
-            Handle: klproduct.handle,
-            Brand: klproduct.vendor,
-            Price: klproduct.variants.nodes[0].price.amount
+                : product.collections.edges.map((a) => a.node.title),
+            ImageURL: product.media.nodes[0].image.url,
+            Handle: product.handle,
+            Brand: product.vendor,
+            Price: product.variants.nodes[0].price.amount
     };
-    _learnq.push(['track', 'Viewed Product', prod]);
+    _learnq.push(['track', 'Viewed Product', item]);
 
+  }
+
+  export function trackAddedToCart(product) {
+    var _learnq = window._learnq || []
+    let item = {
+            Name: product.title,
+            ImageURL: product.media.nodes[0].image.url,
+            Handle: product.handle,
+            Price: product.variants.nodes[0].price.amount
+          }
+          _learnq.push(['track', 'hydrogen ATC', item])
   }
 

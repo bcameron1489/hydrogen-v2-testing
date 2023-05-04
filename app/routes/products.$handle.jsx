@@ -5,7 +5,8 @@ import {MediaFile, Money, ShopPayButton} from '@shopify/hydrogen-react';
 import ProductOptions from '~/components/ProductOptions';
 import { useEffect } from "react";
 import {useMatches, useFetcher} from '@remix-run/react';
-import {trackViewedProduct} from '~/components/Onsite'
+import {trackViewedProduct, trackAddedToCart} from '~/components/Onsite'
+
 
 
 
@@ -50,8 +51,7 @@ export default function ProductHandle() {
   const orderable = selectedVariant?.availableForSale || false;
   
   useEffect(() => {
-    let klproduct = product;
-    trackViewedProduct(klproduct);
+    trackViewedProduct(product);
   },[]);
             
 
@@ -171,22 +171,10 @@ function ProductForm({variantId}) {
   const selectedLocale = root?.data?.selectedLocale;
   const fetcher = useFetcher();
   const {product, selectedVariant, storeDomain} = useLoaderData();
-  
 
-  let klcart = product;
   const handleAtc = function () {
-    var _learnq = window._learnq || [];
-    let item = {
-      Name: klcart.title,
-      ImageURL: klcart.media.nodes[0].image.url,
-      Handle: klcart.handle,
-      Price: klcart.variants.nodes[0].price.amount
-    }
-    _learnq.push(['track', 'hydrogen ATC', item])
+    trackAddedToCart(product)
   }
-
-  
-
   const lines = [{merchandiseId: variantId, quantity: 1}];
 
   return (
@@ -198,7 +186,7 @@ function ProductForm({variantId}) {
         value={selectedLocale?.country ?? 'US'}
       />
       <input type="hidden" name="lines" value={JSON.stringify(lines)} />
-      <button  onClick={handleAtc}className="bg-black text-white px-6 py-3 w-full rounded-md text-center font-medium max-w-[400px]">
+      <button onClick={handleAtc} className="bg-black text-white px-6 py-3 w-full rounded-md text-center font-medium max-w-[400px]">
         Add to Bag
       </button>
     </fetcher.Form>
